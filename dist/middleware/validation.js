@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.messageValidation = exports.categoryValidation = exports.BlogVideosUpdateValidation = exports.BlogVideosValidation = exports.postValidation = exports.postCommentReplyValidation = exports.postCommentValidation = exports.loginValidation = exports.roleValidation = exports.profileUpdateValidation = exports.completeProfileValidation = exports.userValidation = void 0;
+exports.messageValidation = exports.categoryValidation = exports.BlogVideosUpdateValidation = exports.BlogVideosValidation = exports.postValidation = exports.postCommentReplyValidation = exports.postCommentValidation = exports.PassResetValidation = exports.PassResetEmailValidation = exports.loginValidation = exports.roleValidation = exports.profileUpdateValidation = exports.completeProfileValidation = exports.userValidation = void 0;
 
 var Joi = require("@hapi/joi");
 
@@ -187,6 +187,55 @@ var loginValidation = function loginValidation(req, res, next) {
 
 exports.loginValidation = loginValidation;
 
+var PassResetEmailValidation = function PassResetEmailValidation(req, res, next) {
+  var schema = Joi.object({
+    email: Joi.string().min(8).email().required().messages({
+      "string.base": "Email must be a string",
+      "string.email": "Invalid email",
+      "string.empty": "Please fill in your email",
+      "string.min": "Email must be at least {#limit} characters long",
+      "any.required": "Email is required"
+    })
+  });
+
+  var _schema$validate6 = schema.validate(req.body),
+      error = _schema$validate6.error;
+
+  if (error) return res.status(400).json({
+    error: error.details[0].message
+  });
+  next();
+};
+
+exports.PassResetEmailValidation = PassResetEmailValidation;
+
+var PassResetValidation = function PassResetValidation(req, res, next) {
+  var schema = Joi.object({
+    password: Joi.string().min(8).required().messages({
+      "string.base": "Password must be string",
+      "string.empty": "Please fill in your password",
+      "string.min": "Password must be at least {#limit} characters long",
+      "any.required": "Password is required"
+    }),
+    passwordConf: Joi.string().min(8).required().messages({
+      "string.base": "Password Confirmation must be string",
+      "string.empty": "Please confirm your password",
+      "string.min": "Password confirmation must be at least {#limit} characters long",
+      "any.required": "Password confirmation is required"
+    })
+  });
+
+  var _schema$validate7 = schema.validate(req.body),
+      error = _schema$validate7.error;
+
+  if (error) return res.status(400).json({
+    error: error.details[0].message
+  });
+  next();
+};
+
+exports.PassResetValidation = PassResetValidation;
+
 var postCommentValidation = function postCommentValidation(req, res, next) {
   var schema = Joi.object({
     description: Joi.string().required().messages({
@@ -196,8 +245,8 @@ var postCommentValidation = function postCommentValidation(req, res, next) {
     })
   });
 
-  var _schema$validate6 = schema.validate(req.body),
-      error = _schema$validate6.error;
+  var _schema$validate8 = schema.validate(req.body),
+      error = _schema$validate8.error;
 
   if (error) return res.status(400).json({
     error: error.details[0].message
@@ -216,8 +265,8 @@ var postCommentReplyValidation = function postCommentReplyValidation(req, res, n
     })
   });
 
-  var _schema$validate7 = schema.validate(req.body),
-      error = _schema$validate7.error;
+  var _schema$validate9 = schema.validate(req.body),
+      error = _schema$validate9.error;
 
   if (error) return res.status(400).json({
     error: error.details[0].message
@@ -257,8 +306,8 @@ var postValidation = function postValidation(req, res, next) {
     img: Joi.any()
   });
 
-  var _schema$validate8 = schema.validate(req.body),
-      error = _schema$validate8.error;
+  var _schema$validate10 = schema.validate(req.body),
+      error = _schema$validate10.error;
 
   if (error) return res.status(400).json({
     error: error.details[0].message
@@ -292,8 +341,8 @@ var BlogVideosValidation = function BlogVideosValidation(req, res, next) {
     })
   });
 
-  var _schema$validate9 = schema.validate(req.body),
-      error = _schema$validate9.error;
+  var _schema$validate11 = schema.validate(req.body),
+      error = _schema$validate11.error;
 
   if (error) return res.status(400).json({
     error: error.details[0].message
@@ -320,8 +369,8 @@ var BlogVideosUpdateValidation = function BlogVideosUpdateValidation(req, res, n
     })
   });
 
-  var _schema$validate10 = schema.validate(req.body),
-      error = _schema$validate10.error;
+  var _schema$validate12 = schema.validate(req.body),
+      error = _schema$validate12.error;
 
   if (error) return res.status(400).json({
     error: error.details[0].message
@@ -349,8 +398,8 @@ var categoryValidation = function categoryValidation(req, res, next) {
     })
   });
 
-  var _schema$validate11 = schema.validate(req.body),
-      error = _schema$validate11.error;
+  var _schema$validate13 = schema.validate(req.body),
+      error = _schema$validate13.error;
 
   if (error) return res.status(400).json({
     error: error.details[0].message
@@ -384,8 +433,8 @@ var messageValidation = function messageValidation(req, res, next) {
     })
   });
 
-  var _schema$validate12 = schema.validate(req.body),
-      error = _schema$validate12.error;
+  var _schema$validate14 = schema.validate(req.body),
+      error = _schema$validate14.error;
 
   if (error) return res.status(400).json({
     error: error.details[0].message

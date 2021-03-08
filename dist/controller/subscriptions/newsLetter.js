@@ -43,7 +43,7 @@ var NewsLetterController = /*#__PURE__*/function () {
 
                 if (subscribed) {
                   res.status(400).json({
-                    error: "You've already subsribed"
+                    error: "You've already subscribed"
                   });
                 }
 

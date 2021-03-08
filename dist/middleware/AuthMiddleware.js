@@ -137,6 +137,47 @@ var AuthMiddleware = /*#__PURE__*/function () {
 
       return checkSuperAdmin;
     }()
+  }, {
+    key: "isNotVerified",
+    value: function () {
+      var _isNotVerified = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee4(req, res, next) {
+        var id, user;
+        return _regenerator["default"].wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                id = req.params.id;
+                _context4.next = 3;
+                return _User["default"].findOne({
+                  _id: id
+                });
+
+              case 3:
+                user = _context4.sent;
+
+                if (!user.isVerified) {
+                  _context4.next = 6;
+                  break;
+                }
+
+                return _context4.abrupt("return", res.status(400).json({
+                  error: "Your account is already verified, please login!"
+                }));
+
+              case 6:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
+      }));
+
+      function isNotVerified(_x10, _x11, _x12) {
+        return _isNotVerified.apply(this, arguments);
+      }
+
+      return isNotVerified;
+    }()
   }]);
   return AuthMiddleware;
 }();

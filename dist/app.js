@@ -54,9 +54,8 @@ _cloudinary["default"].config({
   cloud_name: process.env.CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET
-});
+}); //connect to db
 
-app.use((0, _cors["default"])()); //connect to db
 
 _mongoose["default"].connect(process.env.DB_CONNECT, {
   useNewUrlParser: true,
@@ -67,7 +66,17 @@ _mongoose["default"].connect(process.env.DB_CONNECT, {
 
 
 app.use(_express["default"].json()); //route Middlewares
+//CORS middleware
 
+var corsMiddleware = function corsMiddleware(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*"); //replace localhost with actual host
+
+  res.header("Access-Control-Allow-Methods", "OPTIONS, GET, PUT, PATCH, POST, DELETE");
+  res.header("Access-Control-Allow-Headers", "*");
+  next();
+};
+
+app.use(corsMiddleware);
 app.use("/api/auth", _auth["default"]);
 app.use("/api/users", _users["default"]);
 app.use("/api/roles", _roles["default"]);
